@@ -119,7 +119,7 @@
 #
 #   Proper Name <Proper@email> commit name <commit@email>
 #   \-----------+------------/ \----------+-------------/
-#               |                         |
+#               |
 #            replace                     find
 #
 # For example if Joe Bloggs made a commit through the GitHub web UI then it
@@ -158,7 +158,7 @@
 #
 #     author                           author
 #     before    .mailmap entry         after
-#     --------- ---------------------- -----------
+#     ---------
 #               Foo <Email>
 #     A <Email> ---------------------> Foo <Email>
 #     B <eMAIL> ---------------------> Foo <eMAIL>
@@ -1239,7 +1239,7 @@ Prafullkumar P. Tale <hector1618@gmail.com> <Hector1618@gmail.com>
 Pragyan Mehrotra <pragyan18168@iiitd.ac.in>
 Pramod Ch <pramodch14@gmail.com>
 Pranjal Tale <pranjaltale16@gmail.com>
-Prashant Tandon <102211549+PT-10@users.noreply.github.com>\
+Prashant Tandon <102211549+PT-10@users.noreply.github.com>
 Prashant Tandon <tandonprashant101@gmail.com>
 Prashant Tyagi <prashanttyagi221295@gmail.com>
 Prasoon Shukla <prasoon92.iitr@gmail.com>
@@ -1767,6 +1767,8 @@ phipf <phipf@online.de>
 platypus <platypus.computerchip@gmail.com>
 prshnt19 <prashant.rawat216@gmail.com>
 rahuldan <rahul02013@gmail.com>
+raman118 <rcho38706@gmail.com> Doremon <113814705+raman118@users.noreply.github.com>
+raman118 <rcho38706@gmail.com> raman118 <rcho38706@gmail.com>
 ramvenkat98 <ramvenkat98@gmail.com>
 rathmann <rathmann.os@gmail.com> <peter@ubuntu.ubuntu-domain>
 rationa-kunal <kunalgk1999@gmail.com> kunal <kunalgk1999@gmail.com>
