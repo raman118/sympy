@@ -19,7 +19,7 @@ from sympy.core.sympify import sympify
 from sympy.functions.combinatorial.factorials import factorial
 from sympy.functions.combinatorial.numbers import fibonacci
 from sympy.functions.elementary.complexes import (Abs, re, im)
-from sympy.functions.elementary.exponential import (exp, log)
+from sympy.functions.elementary.exponential import (exp, exp_polar, log)
 from sympy.functions.elementary.hyperbolic import (acosh, cosh)
 from sympy.functions.elementary.integers import (ceiling, floor)
 from sympy.functions.elementary.miscellaneous import (Max, sqrt)
@@ -372,6 +372,15 @@ def test_evalf_integer_parts():
     assert 260515 - floor(260515/pi + 1/2) * pi == atan(tan(260515))
 
     assert floor(x).evalf(subs={x: sqrt(2)}) == 1.0
+
+
+def test_evalf_integer_parts_polar():
+    arg = S.Half - 3*exp_polar(I*pi)/2
+    for func in (floor, ceiling):
+        assert func(arg, evaluate=False).evalf() == 2.0
+    eps = S(2)**-80
+    assert floor(arg - eps, evaluate=False).evalf() == 1.0
+    assert ceiling(arg + eps, evaluate=False).evalf() == 3.0
 
 
 def test_evalf_trig_zero_detection():

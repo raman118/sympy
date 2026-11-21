@@ -367,7 +367,7 @@ def get_integer_part(expr: Expr, no: int, options: OPT_DICT, return_ints=False) 
 
     Note: this function either gives the exact result or signals failure.
     """
-    from sympy.functions.elementary.complexes import re, im
+    from sympy.functions.elementary.complexes import re, im, unpolarify
     # The expression is likely less than 2^30 or so
     assumed_size = 30
     result = evalf(expr, assumed_size, options)
@@ -451,8 +451,9 @@ def get_integer_part(expr: Expr, no: int, options: OPT_DICT, return_ints=False) 
             try:
                 check_target(re_im, (x, None, x_acc, None), 3)
             except PrecisionExhausted:
-                if not re_im.equals(0):
-                    raise PrecisionExhausted
+                # Real and imaginary parts depend only on the projection to C.
+                if unpolarify(re_im) is not S.Zero and not re_im.equals(0):
+                    raise
                 x = fzero
             nint += int(no*(mpf_cmp(x or fzero, fzero) == no))
         nint = from_int(nint)
