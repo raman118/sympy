@@ -25,6 +25,16 @@ def test_TupleParametersBase():
     assert p.diff(z) == p*2*z
 
 
+def test_hyper_leading_term_with_varying_parameters():
+    expr = hyper([x], [2], 1)
+    assert expr.as_leading_term(x) == 1
+    assert limit(expr, x, 0) == 1
+    expr = hyper([1], [2 + x], 1)
+    assert expr.as_leading_term(x) == exp(1) - 1
+    assert limit(expr, x, 0) == exp(1) - 1
+    raises(NotImplementedError, lambda: hyper([1], [x], 1).as_leading_term(x))
+
+
 def test_hyper():
     raises(TypeError, lambda: hyper(1, 2, z))
 

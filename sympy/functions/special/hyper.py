@@ -257,14 +257,37 @@ class hyper(TupleParametersBase):
         return Piecewise((Sum(coeff * z**n / factorial(n), (n, 0, oo)),
                          self.convergence_statement), (self, True))
 
+    def _eval_is_meromorphic(self, x, a):
+        # The scalar Function implementation cannot handle parameter tuples.
+        return None
+
     def _eval_as_leading_term(self, x, logx, cdir):
-        arg = self.args[2]
+        ap, bq, arg = self.args
         x0 = arg.subs(x, 0)
         if x0 is S.NaN:
             x0 = arg.limit(x, 0, dir='-' if re(cdir).is_negative else '+')
 
         if x0 is S.Zero:
             return S.One
+
+        if ap.has(x) or bq.has(x):
+            from sympy.simplify.hyperexpand import hyperexpand
+
+            # In this case the series is entire in the argument, with poles
+            # in the parameters only at nonpositive integer denominators.
+            if len(ap) <= len(bq):
+                direction = '-' if re(cdir).is_negative else '+'
+                ap0 = ap.limit(x, 0, direction)
+                bq0 = bq.limit(x, 0, direction)
+                arg0 = arg.limit(x, 0, direction)
+                if (all(p.is_finite for p in (*ap0, *bq0, arg0))
+                        and all(b.is_integer is False or b.is_nonpositive is False
+                                for b in bq0)):
+                    value = hyperexpand(hyper(ap0, bq0, arg0))
+                    if value.is_finite and value.is_zero is False:
+                        return value
+            raise NotImplementedError("Leading term of hyper with varying parameters")
+
         return super()._eval_as_leading_term(x, logx=logx, cdir=cdir)
 
     def _eval_nseries(self, x, n, logx, cdir=0):
